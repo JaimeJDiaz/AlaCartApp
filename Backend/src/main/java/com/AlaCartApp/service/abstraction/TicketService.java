@@ -1,4 +1,4 @@
-package com.AlaCartApp.service.abstraction;
+/*package com.AlaCartApp.service.abstraction;
 
 import com.AlaCartApp.models.request.TicketDto;
 import com.AlaCartApp.models.request.TicketDto;
@@ -17,3 +17,4 @@ public interface TicketService {
 
     TicketDto find(Long id);
 }
+*/

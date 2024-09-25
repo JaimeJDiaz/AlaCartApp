@@ -70,22 +70,37 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderMapper.toOrder(orderDto);
         if(orderSaved.isPresent()){
             Order updatedOrder = orderSaved.get();
-            updatedOrder.setState(order.getState());
-            updatedOrder.setTotal(order.getTotal());
-            updatedOrder.setPaymentMethod(order.getPaymentMethod());
-            updatedOrder.setTableEntity(order.getTableEntity());
-            if(updatedOrder.getDetail() != order.getDetail()){
-                updateDetails(updatedOrder.getDetail(), order.getDetail());
+            if(order.getState()!=null) {
+                updatedOrder.setState(order.getState());
             }
-            return orderMapper.toOrderDTO(orderRepository.save(updatedOrder));
+            if(order.getPaymentMethod()!=null) {
+                updatedOrder.setPaymentMethod(order.getPaymentMethod());
+            }
+            if(order.getTableEntity()!=null) {
+                updatedOrder.setTableEntity(order.getTableEntity());
+            }
+            if(updatedOrder.getDetail() != order.getDetail()){
+                Double total = 0D;
+                for(OrderDetail orderDetail: order.getDetail()){
+                    Double price = productRepository.findById(orderDetail.getProduct().getId()).get().getPrice();
+                    orderDetail.setPrice(price);
+                    total += orderDetail.getPrice()*orderDetail.getQuantity();
+                }
+                updatedOrder.setTotal(total);
+            }
+            updatedOrder.setDetail(null);
+            orderRepository.save(updatedOrder);
+            return orderMapper.toOrderDTO(orderRepository.findById(id).get());
+
         }else{
             throw new ResourceNotFoundException("Order not found with id: " + id);
         }
     }
 
-    private void updateDetails(List<OrderDetail> newDetails, List<OrderDetail> oldDetails) {
+    private void updateDetails(Order updatedOrder, List<OrderDetail> oldDetails, Long id) {
+
         oldDetails.forEach(detail -> {
-            Long productId = detail.getProduct().getId();
+            /*Long productId = detail.getProduct().getId();
             boolean flag = false;
             for(OrderDetail newDetail: newDetails){
                 if(newDetail.getProduct().getId() == productId){
@@ -93,27 +108,36 @@ public class OrderServiceImpl implements OrderService {
                     break;
                 }
             }
-            if(!flag){
+            if(!flag){*/
                 orderDetailRepository.deleteById(detail.getId());
-            }
+            //}
         });
-        newDetails.forEach(newDetail -> {
-            Long productId = newDetail.getProduct().getId();
+
+        updatedOrder.getDetail().forEach(newDetail -> {
+            newDetail.setOrder(updatedOrder);
+            orderDetailRepository.save(newDetail);
+            /*Long productId = newDetail.getProduct().getId();
             boolean flag = false;
             for(OrderDetail detail: oldDetails){
                 if(detail.getProduct().getId() == productId){
                     flag = true;
                     if (detail.getQuantity() != newDetail.getQuantity()) {
                         newDetail.setId(detail.getId());
+                        newDetail.setOrder(orderRepository.findById(id).get());
                         orderDetailRepository.save(newDetail);
                     }
                     break;
                 }
             }
             if(!flag){
+                newDetail.setOrder(orderRepository.findById(id).get());
                 orderDetailRepository.save(newDetail);
-            }
+            }*/
         });
+    }
+
+    private Double totalize(Long id){
+        return 0D;
     }
 
     @Override

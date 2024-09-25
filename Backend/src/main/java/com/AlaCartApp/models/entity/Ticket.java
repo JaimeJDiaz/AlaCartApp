@@ -1,9 +1,6 @@
-package com.AlaCartApp.models.entity;
+/*package com.AlaCartApp.models.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 
@@ -22,8 +19,12 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDateTime date;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
+    @ManyToOne
+    @JoinColumn(name = "order_id", nullable = false)
     private Order order;
     private Boolean paid;
     private Boolean isActive;
-}
+}*/

@@ -1,4 +1,4 @@
-package com.AlaCartApp.service.implementation;
+/*package com.AlaCartApp.service.implementation;
 
 import com.AlaCartApp.exception.ResourceNotFoundException;
 import com.AlaCartApp.models.entity.Order;
@@ -85,3 +85,4 @@ public class TicketServiceImpl implements TicketService {
         }
     }
 }
+*/

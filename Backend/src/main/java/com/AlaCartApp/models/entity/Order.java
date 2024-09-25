@@ -23,7 +23,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "table_entity_id", nullable = false)
     private TableEntity tableEntity;
     private LocalDateTime date;

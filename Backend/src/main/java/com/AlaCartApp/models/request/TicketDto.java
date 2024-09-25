@@ -1,4 +1,4 @@
-package com.AlaCartApp.models.request;
+/*package com.AlaCartApp.models.request;
 
 import com.AlaCartApp.models.entity.Order;
 import com.AlaCartApp.models.entity.User;
@@ -18,3 +18,4 @@ public class TicketDto {
     private Boolean paid;
     private Boolean isActive;
 }
+*/

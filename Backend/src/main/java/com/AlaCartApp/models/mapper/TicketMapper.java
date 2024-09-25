@@ -1,4 +1,4 @@
-package com.AlaCartApp.models.mapper;
+/*package com.AlaCartApp.models.mapper;
 
 import com.AlaCartApp.models.entity.Ticket;
 import com.AlaCartApp.models.request.TicketDto;
@@ -19,3 +19,4 @@ public interface TicketMapper {
 
     List<Ticket> toTickets(List<TicketDto> ticketDtoList);
 }
+*/
